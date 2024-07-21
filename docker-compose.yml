@@ -1,0 +1,10 @@
+services:
+    tshark:
+        build: .
+        container_name: tshark_service
+        volumes:
+            - ./data:/data
+        network_mode: host
+        environment:
+            - PCAP_FILE=/data/capture-1-0.pcap
+        command: ./run_tshark.sh
