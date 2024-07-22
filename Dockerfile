@@ -1,20 +1,10 @@
-FROM ubuntu:20.04
+FROM python:3.9-slim
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    tshark \
-    python3 \
-    python3-pip
+WORKDIR /app
 
-# Copy scripts to the container
-COPY scripts/run_tshark.sh /usr/local/bin/run_tshark.sh
-COPY scripts/process_traffic.py /usr/local/bin/process_traffic.py
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Give execution permission
-RUN chmod +x /usr/local/bin/run_tshark.sh
+COPY . .
 
-# Install Python dependencies
-RUN pip3 install pandas
-
-# Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/run_tshark.sh"]
+CMD ["python", "./scripts/process_traffic.py"]

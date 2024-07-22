@@ -1,10 +1,11 @@
+version: '3'
 services:
-    tshark:
+    pcap_processor:
         build: .
-        container_name: tshark_service
+        container_name: pcap_processor_service
         volumes:
-            - ./data:/data
-        network_mode: host
+            - ./data/pcap:/app/data/pcap
+            - ./data/output:/app/data/output
         environment:
-            - PCAP_FILE=/data/capture-1-0.pcap
-        command: ./run_tshark.sh
+            - PCAP_FILE=/app/data/pcap/capture-1-0.pcap
+            - CSV_FILE=/app/data/output/features.csv
